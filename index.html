@@ -3,6 +3,8 @@
 
 <head>
 	<title>Chat app using Socket IO and Node JS</title>
+	<link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=512&id=D6fq9I7xyv5X&format=png">
+
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -36,7 +38,7 @@
 			type="text"
 			placeholder="Message"
 			id="message">
-            <div style="width: 90px; background-color:#38ACEC ; color: white; border:  5px gray solid;font-size: 12px;font-weight: bold;"><a href="https://drive-clone-2884e.web.app/" target="_blank">Upload a File</a></div>
+            <div style="width: 90px; background-color:#38ACEC ; color: white; border:  5px gray solid;font-size: 12px;font-weight: bold;"></div>
             <button class="bg-blue-500 rounded-md p-2
 					text-white mt-5" style="border:3px white solid;">
 			Send
@@ -61,7 +63,7 @@
 	form.addEventListener("submit", (e) => {
 		e.preventDefault();
         if(!myname.value.match("^[a-zA-Z 1-9@]*$"))
-        {alert("Please Enter a Valid Name");
+        {alert("Please Enter a Valid Name . Name can be of alphanumeric digits , @ and space only.");
     return;}
 
 		if (message.value) {
@@ -69,14 +71,19 @@
 			socket.emit('send message', message.value);
 			message.value = "";
 		}
+		else {
+			alert("Message is Empty")
+		}
 	});
 
 	socket.on("send name", (username) => {
-		let name = document.createElement("p");
+		let name = document.createElement("div");
 		name.style.backgroundColor = "grey";
+		name.style.marginLeft="5px";
 		name.style.width = "100%";
 		name.style.textAlign = "left";
-		name.style.color = "white";
+		name.style.color = "black";
+		name.style.fontWeight="bold"
 		name.textContent = "  "+username + " :";
 		messageArea.appendChild(name);
 	});
@@ -84,7 +91,7 @@
 	socket.on("send message", (chat) => {
 		let chatContent = document.createElement("div");
 		chatContent.textContent = chat;
-        chatContent.style.cssText="color:red;font-weight : bold;background-color:white ;padding-left:5px ;width:auto;border:15px gray solid";
+        chatContent.style.cssText="color:red;font-weight : bold;background-color:white ;padding-left:15px ;width:auto;border:15px gray solid";
 		messageArea.appendChild(chatContent);
 	});
 </script>
